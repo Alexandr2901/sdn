@@ -1,0 +1,73 @@
+version: '3.5'
+services:
+  opendaylight:  
+    container_name: opendaylight_docker
+    build:
+      context: .
+      dockerfile: opendaylight/Dockerfile
+    tty: true
+    networks:
+      - sdn
+    ports:
+      - 6633:6633
+      - 8181:8181
+      - 8101:8101
+    mem_limit: 6000m
+    cpus: 4
+          # ssh -p 8101 karaf@localhost 
+      # karaf
+  mininet:  
+    build:
+      context: .
+      dockerfile: mininet/Dockerfile
+    tty: true
+    networks:
+      - sdn
+    privileged: true
+    # volumes:
+    #  - /tmp/.X11-unix:/tmp/.X11-unix
+    #  - /lib/modules:/lib/modules
+  # mininet: 
+  #   image: iwaseyusuke/mininet
+  #   tty: true
+  #   networks:
+  #     - sdn
+  #   privileged: true
+  #   mem_limit: 2048m
+  #   cpus: '2'
+  #   volumes:
+  #    - /tmp/.X11-unix:/tmp/.X11-unix
+  #    - /lib/modules:/lib/modules
+  # opendaylight:
+  #   image: 'stephanfuhrmannionos/opendaylight:14.0.0'
+  #   networks:
+  #     - sdn
+  #   ports:
+  #     - 6633:6633
+  #     - 8181:8181
+  #     - 8101:8101
+  #   mem_limit: 2048m
+  #   cpus: '3'
+    # environment:
+      # - KARAF_FEATURES='odl-restconf,odl-l2switch-switch'
+
+  # opendaylight2:
+  #   image: 'glefevre/opendaylight'
+  #   networks:
+  #     - sdn
+  #   ports:
+  #     - 6633:6633
+  #     - 8181:8181
+  #     - 8101:8101
+  #   mem_limit: 2048m
+  #   cpus: '3'
+networks:
+  sdn:
+    driver: bridge
+# volumes:
+#   postgres:
+#     driver: local
+#   redis:
+#     driver: local
+#   rabbit-data:
+#     driver: local
