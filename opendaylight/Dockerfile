@@ -19,8 +19,7 @@ EXPOSE 8181 6633 8101
 
 RUN echo "featuresBoot = 8da8bcd0-dacc-440e-bd40-cf2f893c2284,odl-dlux-core,odl-dluxapps-nodes,odl-dluxapps-topology,\
 odl-dluxapps-yangui,odl-dluxapps-yangvisualizer,odl-dluxapps-yangman, \
-odl-restconf,odl-l2switch-switch,odl-mdsal-apidocs" >> opt/odl/karaf-0.8.4/etc/org.apache.karaf.features.cfg
-
+odl-restconf,odl-l2switch-switch,odl-mdsal-apidocs,odl-mdsal-distributed-datastore" >> opt/odl/karaf-0.8.4/etc/org.apache.karaf.features.cfg
 # grep "featuresBoot = " opt/odl/karaf-0.8.4/etc/org.apache.karaf.features.cfg
 
 

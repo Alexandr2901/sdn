@@ -1,7 +1,22 @@
 version: '3.5'
 services:
-  opendaylight:  
-    container_name: opendaylight_docker
+  # opendaylight:  
+  #   container_name: opendaylight_docker
+  #   build:
+  #     context: .
+  #     dockerfile: opendaylight/Dockerfile
+  #   tty: true
+  #   networks:
+  #     - sdn
+  #   ports:
+  #     - 6633:6633
+  #     - 8181:8181
+  #     - 8101:8101
+  #   mem_limit: 3000m
+  #   cpus: 2
+          # ssh -p 8101 karaf@localhost 
+      # karaf
+  opendaylight1:  
     build:
       context: .
       dockerfile: opendaylight/Dockerfile
@@ -12,8 +27,34 @@ services:
       - 6633:6633
       - 8181:8181
       - 8101:8101
-    mem_limit: 6000m
-    cpus: 4
+    mem_limit: 3000m
+    cpus: 2
+  opendaylight2:  
+    build:
+      context: .
+      dockerfile: opendaylight/Dockerfile
+    tty: true
+    networks:
+      - sdn
+    ports:
+      - 6634:6633
+      - 8182:8181
+      - 8102:8101
+    mem_limit: 3000m
+    cpus: 2
+  opendaylight3:  
+    build:
+      context: .
+      dockerfile: opendaylight/Dockerfile
+    tty: true
+    networks:
+      - sdn
+    ports:
+      - 6635:6633
+      - 8183:8181
+      - 8103:8101
+    mem_limit: 3000m
+    cpus: 2
           # ssh -p 8101 karaf@localhost 
       # karaf
   mininet:  
