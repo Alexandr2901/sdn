@@ -9,8 +9,7 @@ EXPOSE 8181 6633 8101
 # grep "featuresBoot = " opt/odl/karaf-0.8.4/etc/org.apache.karaf.features.cfg
 RUN /opt/odl/karaf-0.8.4/bin/start && /opt/odl/karaf-0.8.4/bin/client -r 10 \
 "feature:install odl-dlux-core odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-yangui \ 
-odl-dluxapps-yangvisualizer odl-dluxapps-yangman odl-restconf odl-l2switch-switch odl-mdsal-apidocs \ 
+odl-dluxapps-yangvisualizer odl-dluxapps-yangman odl-restconf odl-l2switch-switch odl-mdsal-apidocs http jolokia \ 
 odl-mdsal-distributed-datastore" && /opt/odl/karaf-0.8.4/bin/stop
 CMD /opt/odl/karaf-0.8.4/bin/karaf
 # ENTRYPOINT ["ls", "/opt/odl/karaf-0.8.0/bin/karaf"]
-# ssh -p 8101 karaf@localhost 

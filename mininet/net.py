@@ -27,7 +27,7 @@ def emptyNet():
     net.addLink(S4,S1)
     net.start()
     net.pingAll()
-    for i in range(100):
+    for i in range(50):
         S1 = net.get('s1')
         Sn = net.addSwitch('s' + str(i+5))
         Hn = net.addHost('h' + str(i+5))
@@ -38,6 +38,9 @@ def emptyNet():
         Sn.attach(slink.intf1)
         Sn.attach(hlink.intf1)
         Hn.configDefault(defaultRoute=Hn.defaultIntf())
+        net.pingAll()
+        sleep(5)
+    for i in range(1000):
         net.pingAll()
         sleep(5)
     CLI(net)
