@@ -6,12 +6,12 @@ docker-compose up -d --build
 # echo 'hi'
 # docker exec -it sdn_opendaylight1_1 /opt/odl/karaf-0.8.4/bin/status
 # sleep 15
-docker exec -it sdn_opendaylight1_1 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh 1 sdn_opendaylight1_1 sdn_opendaylight2_1 sdn_opendaylight3_1
-docker exec -it sdn_opendaylight2_1 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh 2 sdn_opendaylight2_1 sdn_opendaylight2_1 sdn_opendaylight3_1
-docker exec -it sdn_opendaylight3_1 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh 3 sdn_opendaylight3_1 sdn_opendaylight2_1 sdn_opendaylight3_1
-docker exec -it sdn_opendaylight1_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart org.opendaylight.controller.sal-distributed-datastore"
-docker exec -it sdn_opendaylight2_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart org.opendaylight.controller.sal-distributed-datastore"
-docker exec -it sdn_opendaylight3_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart org.opendaylight.controller.sal-distributed-datastore"
+# docker exec -it sdn_opendaylight1_1 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh 1 sdn_opendaylight1_1 sdn_opendaylight2_1 sdn_opendaylight3_1
+# docker exec -it sdn_opendaylight2_1 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh 2 sdn_opendaylight1_1 sdn_opendaylight2_1 sdn_opendaylight3_1
+# docker exec -it sdn_opendaylight3_1 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh 3 sdn_opendaylight1_1 sdn_opendaylight2_1 sdn_opendaylight3_1
+# docker exec -it sdn_opendaylight1_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart org.opendaylight.controller.sal-distributed-datastore"
+# docker exec -it sdn_opendaylight2_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart org.opendaylight.controller.sal-distributed-datastore"
+# docker exec -it sdn_opendaylight3_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart org.opendaylight.controller.sal-distributed-datastore"
 # docker exec sdn_opendaylight1_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart"
 # docker exec sdn_opendaylight2_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart"
 # docker exec sdn_opendaylight3_1 /opt/odl/karaf-0.8.4/bin/client -r 10 "restart"

@@ -1,51 +1,43 @@
-version: '3.5'
+version: '3.9'
 services:
-  # opendaylight:  
-  #   container_name: opendaylight_docker
-  #   build:
-  #     context: .
-  #     dockerfile: opendaylight/Dockerfile
-  #   tty: true
-  #   networks:
-  #     - sdn
-  #   ports:
-  #     - 6633:6633
-  #     - 8181:8181
-  #     - 8101:8101
-  #   mem_limit: 3000m
-  #   cpus: 2
-          # ssh -p 8101 karaf@localhost 
-            # karaf
-          # http://localhost:8181/index.html#/node/index
   opendaylight1:  
     build:
       context: .
       dockerfile: opendaylight/Dockerfile
+      args:
+        - cluster_number=1
     tty: true
     networks:
-      - sdn
+      sdn:
+        ipv4_address: 172.19.0.2
     ports:
       - 6633:6633
       - 8181:8181
       - 8101:8101
-  opendaylight2:  
+  opendaylight2: 
     build:
       context: .
       dockerfile: opendaylight/Dockerfile
+      args:
+        - cluster_number=2
     tty: true
     networks:
-      - sdn
+      sdn:
+       ipv4_address: 172.19.0.3
     ports:
       - 6634:6633
       - 8182:8181
       - 8102:8101
-  opendaylight3:  
+  opendaylight3:
     build:
       context: .
       dockerfile: opendaylight/Dockerfile
+      args:
+        - cluster_number=3
     tty: true
     networks:
-      - sdn
+      sdn:
+       ipv4_address: 172.19.0.4
     ports:
       - 6635:6633
       - 8183:8181
@@ -53,54 +45,18 @@ services:
   mininet:  
     depends_on:
       - opendaylight1
-      - opendaylight2
-      - opendaylight3
+      # - opendaylight2
+      # - opendaylight3
     build:
       context: .
       dockerfile: mininet/Dockerfile
     tty: true
     networks:
-      - sdn
+      sdn:
+       ipv4_address: 172.19.0.5
     privileged: true
     volumes:
       - ./mininet/net.py:/net.py:delegated
-    # volumes:
-    #  - /tmp/.X11-unix:/tmp/.X11-unix
-    #  - /lib/modules:/lib/modules
-  # mininet: 
-  #   image: iwaseyusuke/mininet
-  #   tty: true
-  #   networks:
-  #     - sdn
-  #   privileged: true
-  #   mem_limit: 2048m
-  #   cpus: '2'
-  #   volumes:
-  #    - /tmp/.X11-unix:/tmp/.X11-unix
-  #    - /lib/modules:/lib/modules
-  # opendaylight:
-  #   image: 'stephanfuhrmannionos/opendaylight:14.0.0'
-  #   networks:
-  #     - sdn
-  #   ports:
-  #     - 6633:6633
-  #     - 8181:8181
-  #     - 8101:8101
-  #   mem_limit: 2048m
-  #   cpus: '3'
-    # environment:
-      # - KARAF_FEATURES='odl-restconf,odl-l2switch-switch'
-
-  # opendaylight2:
-  #   image: 'glefevre/opendaylight'
-  #   networks:
-  #     - sdn
-  #   ports:
-  #     - 6633:6633
-  #     - 8181:8181
-  #     - 8101:8101
-  #   mem_limit: 2048m
-  #   cpus: '3'
 networks:
   sdn:
     driver: bridge

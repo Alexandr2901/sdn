@@ -10,7 +10,9 @@ from mininet.link import Link
 def emptyNet():
 
     net = Mininet(controller=RemoteController, waitConnected=True)
-    net.addController('co',controller=RemoteController, ip="opendaylight1",port=6633)
+    net.addController('co1',controller=RemoteController, ip="opendaylight1",port=6633)
+    # net.addController('co2',controller=RemoteController, ip="opendaylight2",port=6633)
+    # net.addController('co3',controller=RemoteController, ip="opendaylight3",port=6633)
 
     H2 = net.addHost('h2')
     H3 = net.addHost('h3')
