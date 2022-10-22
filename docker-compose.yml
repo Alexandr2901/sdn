@@ -1,5 +1,12 @@
 version: '3.9'
 services:
+  # nginx:
+  #   build: ./nginx
+  #   ports:
+  #   - "8080:6633"
+  #   networks:
+  #     sdn:
+  #       ipv4_address: 172.19.0.6
   opendaylight1:  
     build:
       context: .
@@ -60,6 +67,9 @@ services:
 networks:
   sdn:
     driver: bridge
+    ipam:
+      config:
+       - subnet: 172.19.0.0/16
 # volumes:
 #   postgres:
 #     driver: local

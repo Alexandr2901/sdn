@@ -13,6 +13,7 @@ RUN /opt/odl/karaf-0.8.4/bin/start && /opt/odl/karaf-0.8.4/bin/client -r 10 \
 "feature:install odl-dlux-core odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-yangui \ 
 odl-dluxapps-yangvisualizer odl-dluxapps-yangman odl-restconf odl-l2switch-switch odl-mdsal-apidocs http jolokia \ 
 odl-mdsal-distributed-datastore" && \ 
+/opt/odl/karaf-0.8.4/bin/set_persistence.sh off && \
 # /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $cluster_number 172.19.0.2 172.19.0.3 172.19.0.4 && \ 
 # /opt/odl/karaf-0.8.4/bin/client -r 10 restart org.opendaylight.controller.sal-distributed-datastore && \ 
 /opt/odl/karaf-0.8.4/bin/stop
