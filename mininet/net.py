@@ -11,7 +11,7 @@ def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     # net.addController('co1',controller=RemoteController, ip="opendaylight1",port=6633)
     # c0 = net.addController('c0',controller=RemoteController, ip="nginx",port=6633)
-    c1 = net.addController('c1',controller=RemoteController, ip="opendaylight1",port=6633)
+    c1 = net.addController('c1',controller=RemoteController, ip="172.19.0.2",port=6633)
     # c2 = net.addController('c2',controller=RemoteController, ip="opendaylight2",port=6633)
     # c3 = net.addController('c3',controller=RemoteController, ip="opendaylight3",port=6633)
 
@@ -50,7 +50,7 @@ def emptyNet():
    
     # 
     net.pingAll()
-    for i in range(1):
+    for i in range(50):
         S1 = net.get('s1')
         Sn = net.addSwitch('s' + str(i+6))
         Hn = net.addHost('h' + str(i+6))

@@ -8,14 +8,14 @@ FROM ubuntu:latest
 # RUN mininet/util/install.sh -a
 
 # RUN apt-get -y update
-RUN apt-get update && apt-get -y install mininet openvswitch-switch iproute2 iputils-ping git sudo python2
-RUN apt-get install python-pip
+RUN apt-get update && apt-get -y install mininet openvswitch-switch iproute2 iputils-ping
+#RUN apt-get install -y python-pip
 COPY mininet/ENTRYPOINT.sh /
-RUN git clone https://github.com/mininet/mininet
+#RUN git clone https://github.com/mininet/mininet
 # RUN cd mininet && git tag && git checkout -b mininet-2.3.0 2.3.0 && cd .. 
 # RUN cd mininet && export PYTHONPATH=$PYTHONPATH:mininet:
 # RUN PYTHON=python2 mininet/util/install.sh -n
-RUN mininet/util/install.sh -fw
+#RUN mininet/util/install.sh -fw
 # EXPOSE 6633 6653 6640
 ENTRYPOINT ["/ENTRYPOINT.sh"]
 # mininet/util/install.sh -fw
