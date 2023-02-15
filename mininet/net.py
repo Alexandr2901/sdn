@@ -15,57 +15,69 @@ def emptyNet():
     # c2 = net.addController('c2',controller=RemoteController, ip="opendaylight2",port=6633)
     # c3 = net.addController('c3',controller=RemoteController, ip="opendaylight3",port=6633)
 
-    # net.addController('co2',controller=RemoteController, ip="opendaylight2",port=6633)
-    # net.addController('co3',controller=RemoteController, ip="opendaylight3",port=6633)
-
-    H2 = net.addHost('h2')
-    H3 = net.addHost('h3')
-    H4 = net.addHost('h4')
     S1 = net.addSwitch('s1')
     S2 = net.addSwitch('s2')
     S3 = net.addSwitch('s3')
     S4 = net.addSwitch('s4')
-    net.addLink(H2,S2)
-    net.addLink(H3,S3)
-    net.addLink(H4,S4)
-    net.addLink(S2,S1)
-    net.addLink(S3,S1)
+    S5 = net.addSwitch('s5')
+    S6 = net.addSwitch('s6')
+    S7 = net.addSwitch('s7')
+    S8 = net.addSwitch('s8')
+    S9 = net.addSwitch('s9')
+
+    H1 = net.addHost('h1')
+    H2 = net.addHost('h2')
+    net.addLink(H1,S5)
+    net.addLink(H2,S5)
+
+    switches = [S1,S2,S3,S7,S8,S9,S4,S6]
+
+    # 1 2 3 свитч линки
+    # 4 5 6
+    # 7 8 9
+
+    net.addLink(S1,S2)
     net.addLink(S4,S1)
-
+    net.addLink(S5,S2)
+    net.addLink(S5,S4)
+    
+    net.addLink(S7,S4)
     net.addLink(S2,S3)
-    net.addLink(S3,S4)
-    net.addLink(S4,S2)
+    net.addLink(S3,S6)
+    net.addLink(S6,S9)
+    net.addLink(S9,S8)
+    net.addLink(S8,S7)
+    net.addLink(S5,S6)
+    net.addLink(S5,S8)
 
-    # net.build()
-   
+    net.addLink(S1,S5)
+    net.addLink(S2,S4)
+    net.addLink(S3,S5)
+    net.addLink(S2,S6)
+    net.addLink(S4,S8)
+    net.addLink(S5,S7)
+    net.addLink(S6,S8)
+    net.addLink(S5,S9)
+
     net.start()
-    # SC = net.addSwitch('s5')
-    # net.addLink(SC,S1)
-    # SC.start([c1,c2,c3])
-    # S1.start()
-    # S2.start()
-    # S3.start()
-    # S4.start()
-    # net.addLink(SC,c1)
-   
-    # 
-    net.pingAll()
-    for i in range(50):
-        S1 = net.get('s1')
-        Sn = net.addSwitch('s' + str(i+6))
-        Hn = net.addHost('h' + str(i+6))
-        hlink = net.addLink(Hn,Sn)
-        slink = net.addLink(S1,Sn)
-        S1.attach(slink.intf1)
-        Sn.start(net.controllers)
-        Sn.attach(slink.intf1)
-        Sn.attach(hlink.intf1)
-        Hn.configDefault(defaultRoute=Hn.defaultIntf())
-        net.pingAll()
+    for i in range(1):
+        counter = 0
+        hosts = []
+        for switch in switches:
+            counter +=1
+            # S1 = switch
+            numder = i*(len(switches)+1) + counter + 10
+            Hn = net.addHost('h' + str(numder))
+            hlink = net.addLink(switch,Hn)
+            switch.attach(hlink.intf1)
+            Hn.configDefault(defaultRoute=Hn.defaultIntf())
+            # net.ping([Hn,H0])
+            hosts.append(Hn)
         sleep(1)
-    # for i in range(1000):
-    #     net.pingAll()
-    #     sleep(5)
+        net.ping(hosts)
+        # net.ping
+        # net.pingAll()
+        # sleep(1)
     CLI(net)
     net.stop()
 if __name__ == '__main__':
