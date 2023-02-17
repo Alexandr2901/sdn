@@ -59,7 +59,7 @@ services:
         ipv4_address: 172.19.0.5
      privileged: true
      volumes:
-       - ./mininet/net.py:/net.py:delegated
+       - ./mininet/scenarios:/scenarios:delegated
 networks:
   sdn:
     driver: bridge
