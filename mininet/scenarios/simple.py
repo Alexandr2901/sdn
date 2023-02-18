@@ -22,6 +22,11 @@ def emptyNet():
     net.addLink(H2,S1)
     net.addLink(H3,S1)
     s1_pcap = S1.popen('tcpdump -w dump.pcap -i any')
+    for h in net.hosts:
+        print("disable ipv6")
+        h.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
+        h.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
+        h.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
 
 
     net.start()
