@@ -9,8 +9,8 @@ from mininet.link import Link
 
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
-    # c1 = net.addController('c1',controller=RemoteController, ip="127.0.0.1",port=6633)
     c1 = net.addController('c1',controller=RemoteController, ip="172.19.0.2",port=6633)
+    # c1 = net.addController('c1',controller=RemoteController, ip="127.0.0.1",port=6633)
     # c2 = net.addController('c2',controller=RemoteController, ip="172.19.0.3",port=6633)
     # c3 = net.addController('c3',controller=RemoteController, ip="172.19.0.4",port=6633)
 
@@ -45,8 +45,8 @@ def emptyNet():
     for i in range(1):
         net.pingAll()
         sleep(1)
-    # CLI(net)
     s1_pcap.terminate()
+    CLI(net)
     net.stop()
 if __name__ == '__main__':
     setLogLevel('info')
