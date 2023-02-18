@@ -22,3 +22,5 @@ docker-compose up -d --build
 # mininet dpctl dump-flows
 # sudo docker exec -it sdn_mininet_1 /bin/bash
 # nc -vz 172.19.0.2 1-10000 2>&1 | grep succeeded
+# scp mininet@192.168.56.106:/home/mininet/projects/sdn/mininet/scenarios/dump.pcap  .
+# tcpdump -i any -nq
