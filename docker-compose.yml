@@ -21,34 +21,34 @@ services:
       - 6633:6633
       - 8181:8181
       - 8101:8101
-  # opendaylight2: 
-  #   build:
-  #     context: .
-  #     dockerfile: opendaylight/Dockerfile
-  #     args:
-  #       - cluster_number=2
-  #   tty: true
-  #   networks:
-  #     sdn:
-  #      ipv4_address: 172.19.0.3
-  #   ports:
-  #     - 6634:6633
-  #     - 8182:8181
-  #     - 8102:8101
-  # opendaylight3:
-  #   build:
-  #     context: .
-  #     dockerfile: opendaylight/Dockerfile
-  #     args:
-  #       - cluster_number=3
-  #   tty: true
-  #   networks:
-  #     sdn:
-  #      ipv4_address: 172.19.0.4
-  #   ports:
-  #     - 6635:6633
-  #     - 8183:8181
-  #     - 8103:8101
+  opendaylight2: 
+    build:
+      context: .
+      dockerfile: opendaylight/Dockerfile
+      args:
+        - cluster_number=2
+    tty: true
+    networks:
+      sdn:
+       ipv4_address: 172.19.0.3
+    ports:
+      - 6634:6633
+      - 8182:8181
+      - 8102:8101
+  opendaylight3:
+    build:
+      context: .
+      dockerfile: opendaylight/Dockerfile
+      args:
+        - cluster_number=3
+    tty: true
+    networks:
+      sdn:
+       ipv4_address: 172.19.0.4
+    ports:
+      - 6635:6633
+      - 8183:8181
+      - 8103:8101
   mininet:  
      build:
        context: .
