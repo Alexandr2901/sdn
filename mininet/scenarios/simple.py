@@ -43,11 +43,15 @@ def emptyNet():
         # net.pingAll()
     # sleep(5)
     # s1_pcap = S1.popen('tcpdump -w '+fileName+' -i any')
-    for i in range(3):
-        # sleep(5)
-        net.pingAll()
-        sleep(1)
-    # sleep(3)
+    # for i in range(10):
+    #     # sleep(5)
+    #     net.pingAll("0")
+    #     # sleep(1)
+    h1 = net.hosts[0]
+    h2 = net.hosts[1]
+    # print(h2.IP())
+    print (h1.cmd('ping -c 100 -i 0.1 -q -s 100 ' + h2.IP()))
+    sleep(5)
     # net.iperf(hosts=net.hosts,
     #         #   l4Type='UDP',
     #           seconds=1,
