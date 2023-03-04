@@ -11,6 +11,10 @@ import os
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
+    c1 = net.addController('c1',controller=RemoteController, ip="172.19.0.2",port=6633)
+    c2 = net.addController('c2',controller=RemoteController, ip="172.19.0.3",port=6633)
+    c3 = net.addController('c3',controller=RemoteController, ip="172.19.0.4",port=6633)
+
     fileName = 'simple.pcap'
     try:
         os.remove(fileName)
@@ -18,12 +22,8 @@ def emptyNet():
         pass
     s1_pcap = S1.popen('tcpdump -i any -w '+fileName) # s1-eth1 eth0 any
 
-
     # s1_pcap.terminate()
-    c1 = net.addController('c1',controller=RemoteController, ip="172.19.0.2",port=6633)
-    c2 = net.addController('c2',controller=RemoteController, ip="172.19.0.3",port=6633)
-    c3 = net.addController('c3',controller=RemoteController, ip="172.19.0.4",port=6633)
-
+  
     # net.addLink(c1,S1)
     for i in range(2):
         Hn = net.addHost('h' + str(i+1))
@@ -45,18 +45,22 @@ def emptyNet():
     # s1_pcap = S1.popen('tcpdump -w '+fileName+' -i any')
     # for i in range(10):
     #     # sleep(5)
-    #     net.pingAll("0")
+    # net.pingAll("0")
     #     # sleep(1)
     h1 = net.hosts[0]
     h2 = net.hosts[1]
     # print(h2.IP())
-    print (h1.cmd('ping -c 100 -i 0.1 -q -s 100 ' + h2.IP()))
-    sleep(5)
-    # net.iperf(hosts=net.hosts,
-    #         #   l4Type='UDP',
-    #           seconds=1,
-    #         #   udpBw='1M'
-    #           )
+    print("start ping flood")
+    print (h1.cmd('ping -c 20 -i 0.001 -q -s 100 ' + h2.IP()))
+    # print (h1.cmd('ping -c 2 -i 0.001 -q -s 100 ' + h2.IP()))
+    # print (h2.cmd('ping -c 2 -i 0.001 -q -s 100 ' + h1.IP()))
+
+    # sleep(1)
+    net.iperf(hosts=net.hosts,
+              l4Type='UDP',
+              seconds=1,
+              udpBw='1M'
+              )
     # for i in range(3):
     #     Hn = net.addHost( 'h' + str(i+3))
     #     hlink = net.addLink(S1,Hn)
@@ -73,9 +77,9 @@ def emptyNet():
     # for i in range(1):
     #     net.pingAll()
     #     # sleep(5)
-    sleep(3)
+    sleep(1)
     s1_pcap.terminate()
-    # CLI(net)
+    CLI(net)
     net.stop()
 
 if __name__ == '__main__':

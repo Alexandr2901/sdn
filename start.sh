@@ -24,3 +24,4 @@ docker-compose up -d --build --remove-orphans
 # nc -vz 172.19.0.2 1-10000 2>&1 | grep succeeded
 # scp mininet@192.168.56.106:/home/mininet/projects/sdn/mininet/scenarios/dump.pcap  .
 # tcpdump -i any -nq
+docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}" 
