@@ -20,6 +20,6 @@ odl-mdsal-distributed-datastore" && \
 # ARG cluster_number
 # ENV cluster_number $cluster_number
 # RUN /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $cluster_number 172.19.0.2 172.19.0.3 172.19.0.4
-RUN apt-get -y update && apt install -y tcpdump dnsutils
+RUN apt-get -y update && apt install -y tcpdump dnsutils iputils-ping net-tools
 COPY opendaylight/ENTRYPOINT.sh /
 ENTRYPOINT ["/ENTRYPOINT.sh"]

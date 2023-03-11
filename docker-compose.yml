@@ -7,48 +7,68 @@ services:
   #   networks:
   #     sdn:
   #       ipv4_address: 172.19.0.6
-  opendaylight1:  
+  opendaylight_max:  
     build:
       context: .
       dockerfile: opendaylight/Dockerfile
-      args:
-        - cluster_number=1
     tty: true
+    # restart: always
     networks:
       sdn:
-        ipv4_address: 172.19.0.2
-    ports:
-      - 6633:6633
-      - 8181:8181
-      - 8101:8101
-  opendaylight2: 
-    build:
-      context: .
-      dockerfile: opendaylight/Dockerfile
-      args:
-        - cluster_number=2
-    tty: true
-    networks:
-      sdn:
-       ipv4_address: 172.19.0.3
-    ports:
-      - 6634:6633
-      - 8182:8181
-      - 8102:8101
-  opendaylight3:
-    build:
-      context: .
-      dockerfile: opendaylight/Dockerfile
-      args:
-        - cluster_number=3
-    tty: true
-    networks:
-      sdn:
-       ipv4_address: 172.19.0.4
-    ports:
-      - 6635:6633
-      - 8183:8181
-      - 8103:8101
+    deploy:
+      # mode: replicated
+      replicas: 3
+    # ports:
+    #   - 6633:6633
+    #   - 8181:8181
+    #   - 8101:8101
+    # expose:
+    #   - 6633
+    #   - 8181
+    #   - 8101
+
+  # opendaylight1:  
+  #   build:
+  #     context: .
+  #     dockerfile: opendaylight/Dockerfile
+  #     args:
+  #       - cluster_number=1
+  #   tty: true
+  #   networks:
+  #     sdn:
+  #       ipv4_address: 172.19.0.2
+  #   ports:
+  #     - 6633:6633
+  #     - 8181:8181
+  #     - 8101:8101
+  # opendaylight2: 
+  #   build:
+  #     context: .
+  #     dockerfile: opendaylight/Dockerfile
+  #     args:
+  #       - cluster_number=2
+  #   tty: true
+  #   networks:
+  #     sdn:
+  #      ipv4_address: 172.19.0.3
+  #   ports:
+  #     - 6634:6633
+  #     - 8182:8181
+  #     - 8102:8101
+  # opendaylight3:
+  #   build:
+  #     context: .
+  #     dockerfile: opendaylight/Dockerfile
+  #     args:
+  #       - cluster_number=3
+  #   tty: true
+  #   networks:
+  #     sdn:
+  #      ipv4_address: 172.19.0.4
+    # ports:
+    #   - 6635:6633
+    #   - 8183:8181
+    #   - 8103:8101
   mininet:  
      build:
        context: .
@@ -56,16 +76,29 @@ services:
      tty: true
      networks:
        sdn:
-        ipv4_address: 172.19.0.5
+        ipv4_address: 172.16.0.222
      privileged: true
      volumes:
        - ./mininet/scenarios:/scenarios:delegated
+  # portainer:
+  #    image: portainer/portainer-ce:latest
+  #    container_name: portainer
+  #    security_opt:
+  #      - no-new-privileges:true
+  #    volumes:
+  #      - /etc/localtime:/etc/localtime:ro
+  #      - /var/run/docker.sock:/var/run/docker.sock:ro
+  # #      - ./portainer-data:/data
+  #    ports:
+  #     - 9000:9000
+  #    networks:
+  #      sdn:
 networks:
   sdn:
     driver: bridge
     ipam:
       config:
-       - subnet: 172.19.0.0/16
+       - subnet: 172.16.0.0/16
 # volumes:
 #   postgres:
 #     driver: local

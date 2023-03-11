@@ -7,23 +7,29 @@ from mininet.cli import CLI
 from mininet.link import Link
 import os
 
-
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
-    S1 = net.addSwitch('s1')
-    c1 = net.addController('c1',controller=RemoteController, ip="172.19.0.2",port=6633)
-    c2 = net.addController('c2',controller=RemoteController, ip="172.19.0.3",port=6633)
-    c3 = net.addController('c3',controller=RemoteController, ip="172.19.0.4",port=6633)
+    # net = Mininet(controller=RemoteController)
 
-    fileName = 'simple.pcap'
+    S1 = net.addSwitch('s1')
+    # c1 = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn")
+    for i in range(3):
+        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
+
+    # c2 = net.addController('c2',controller=RemoteController, ip="172.16.0.3",port=6633)
+    # c3 = net.addController('c3',controller=RemoteController, ip="172.16.0.4",port=6633)
+    # c4 = net.addController('c4',controller=RemoteController, ip="172.16.0.3",port=6633)
+    # c5 = net.addController('c5',controller=RemoteController, ip="172.16.0.4",port=6633)
+    # c3 = net.addController('c3',controller=RemoteController, ip="opendaylight1",port=6633)
+    # sleep(5)
+    fileName = 'simple.pcap'    
     try:
         os.remove(fileName)
     except OSError:
         pass
     s1_pcap = S1.popen('tcpdump -i any -w '+fileName) # s1-eth1 eth0 any
-
     # s1_pcap.terminate()
-  
+
     # net.addLink(c1,S1)
     for i in range(2):
         Hn = net.addHost('h' + str(i+1))
@@ -45,22 +51,21 @@ def emptyNet():
     # s1_pcap = S1.popen('tcpdump -w '+fileName+' -i any')
     # for i in range(10):
     #     # sleep(5)
-    # net.pingAll("0")
+    net.pingAll("0")
     #     # sleep(1)
     h1 = net.hosts[0]
     h2 = net.hosts[1]
     # print(h2.IP())
     print("start ping flood")
-    print (h1.cmd('ping -c 20 -i 0.001 -q -s 100 ' + h2.IP()))
-    # print (h1.cmd('ping -c 2 -i 0.001 -q -s 100 ' + h2.IP()))
-    # print (h2.cmd('ping -c 2 -i 0.001 -q -s 100 ' + h1.IP()))
+    # print (h1.cmd('ping -c 10 -i 0.001 -q -s 1000 ' + h2.IP()))
 
     # sleep(1)
-    net.iperf(hosts=net.hosts,
+    net.iperf((h1,h2),
               l4Type='UDP',
               seconds=1,
-              udpBw='1M'
+            #   udpBw='1M'
               )
+    # net.pingAll(timeout="0")
     # for i in range(3):
     #     Hn = net.addHost( 'h' + str(i+3))
     #     hlink = net.addLink(S1,Hn)
