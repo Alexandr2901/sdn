@@ -28,5 +28,6 @@ string="${arrVar[*]}"
 # echo $string
 # echo /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
+sed -i 's/cluster {/cluster { \n      akka.cluster.downing-provider-class = "akka.cluster.sbr.SplitBrainResolverProvider"/' /opt/odl/karaf-0.8.4/configuration/initial/akka.conf 
 /opt/odl/karaf-0.8.4/bin/stop
-/opt/odl/karaf-0.8.4/bin/karaf
+JAVA_MAX_MEM=4G JAVA_MAX_PERM_MEM=512m /opt/odl/karaf-0.8.4/bin/karaf 
