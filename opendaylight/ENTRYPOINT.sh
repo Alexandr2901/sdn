@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
 arrVar=()
-for ((i=1; i<=100;i++)); do
+for ((i=1; i<=10;i++)); do
     # ip="172.16.0.$i"
     param=$(dig +short sdn_opendaylight_max_$i.sdn_sdn)
     # echo $param
     arrVar+=($param)
-    param=$(dig +short opendaylight$i)
-    arrVar+=($param)
-
     # param=$(ping -c 1 127.0.0.1)
     # if [[$param =="0"]]; then
     #     echo $param
@@ -15,7 +12,6 @@ for ((i=1; i<=100;i++)); do
     # arrVar+="172.16.0.$i "
 done
 # echo "hi"
-
 # for value in "${arrVar[@]}"
 # do
 #      echo $value
@@ -31,9 +27,6 @@ done
 string="${arrVar[*]}"
 # echo $string
 # echo /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
-
 /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
 /opt/odl/karaf-0.8.4/bin/stop
-# /opt/odl/karaf-0.8.4/bin/configure_cluster.sh 1 172.16.0.2 172.16.0.3 172.16.0.4
-# /opt/odl/karaf-0.8.4/bin/stop
 /opt/odl/karaf-0.8.4/bin/karaf

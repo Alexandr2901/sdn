@@ -9,7 +9,8 @@ FROM ubuntu:latest
 
 # RUN apt-get -y update
 RUN apt-get update && apt-get -y install mininet openvswitch-switch iproute2 iputils-ping
-RUN apt-get update && apt-get -y install tcpdump netcat
+RUN apt-get update && apt-get -y install tcpdump netcat python3-pip
+RUN pip install requests prettytable
 #RUN apt-get install -y python-pip
 COPY mininet/ENTRYPOINT.sh /
 #RUN git clone https://github.com/mininet/mininet
