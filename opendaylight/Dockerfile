@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-# RUN echo $cluster_number
+# FROM opendaylight/opendaylight:17.2.0
 RUN apt-get -y update && apt install -y openjdk-8-jre wget zip 
 RUN mkdir /opt/odl
 RUN wget -O /opt/odl/odl.zip https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.4/karaf-0.8.4.zip
