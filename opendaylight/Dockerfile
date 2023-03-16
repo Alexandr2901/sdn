@@ -9,17 +9,19 @@ RUN unzip /opt/odl/odl.zip -d /opt/odl
 # CMD /opt/odl/boron/bin/karaf
 # EXPOSE 8181 6633 8101
 # grep "featuresBoot = " opt/odl/karaf-0.8.4/etc/org.apache.karaf.features.cfg
-RUN /opt/odl/karaf-0.8.4/bin/start && /opt/odl/karaf-0.8.4/bin/client -r 10 \
+WORKDIR /opt/odl/karaf-0.8.4/bin
+RUN ./start && ./client -r 10 \
 "feature:install odl-dlux-core odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-yangui \ 
 odl-dluxapps-yangvisualizer odl-dluxapps-yangman odl-restconf odl-l2switch-switch odl-mdsal-apidocs http jolokia \ 
 odl-mdsal-distributed-datastore" && \ 
-/opt/odl/karaf-0.8.4/bin/set_persistence.sh off && \
+./set_persistence.sh off && \
 # /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $cluster_number 172.19.0.2 172.19.0.3 172.19.0.4 && \ 
 # /opt/odl/karaf-0.8.4/bin/client -r 10 restart org.opendaylight.controller.sal-distributed-datastore && \ 
-/opt/odl/karaf-0.8.4/bin/stop
+./stop
+RUN rm /opt/odl/odl.zip 
 # ARG cluster_number
 # ENV cluster_number $cluster_number
 # RUN /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $cluster_number 172.19.0.2 172.19.0.3 172.19.0.4
-RUN apt-get -y update && apt install -y tcpdump dnsutils iputils-ping net-tools
+RUN apt-get -y update && apt-get install -y tcpdump dnsutils iputils-ping net-tools
 COPY opendaylight/ENTRYPOINT.sh /
 ENTRYPOINT ["/ENTRYPOINT.sh"]
