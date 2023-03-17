@@ -1,0 +1,14 @@
+FROM ubuntu:latest
+RUN apt-get -y update && apt install -y openjdk-17-jre wget zip 
+RUN mkdir /opt/odl
+RUN wget -O /opt/odl/odl.zip https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.17.2/karaf-0.17.2.zip
+RUN unzip /opt/odl/odl.zip -d /opt/odl
+WORKDIR /opt/odl/karaf-0.17.2/bin
+RUN ./set_persistence.sh off
+RUN cat ../etc/users.properties 
+RUN rm /opt/odl/odl.zip 
+RUN apt-get -y update && apt-get install -y tcpdump dnsutils iputils-ping net-tools
+RUN  echo "feature:install odl-restconf odl-mdsal-apidocs http  && logout" | ./karaf
+# RUN  echo "feature:install odl-restconf odl-mdsal-apidocs http jolokia odl-mdsal-distributed-datastore && logout" | ./karaf
+COPY opendaylight/ENTRYPOINT.sh /
+ENTRYPOINT ["/ENTRYPOINT.sh"]

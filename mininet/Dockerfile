@@ -13,6 +13,7 @@ RUN apt-get update && apt-get -y install tcpdump netcat python3-pip
 RUN pip install requests prettytable
 #RUN apt-get install -y python-pip
 COPY mininet/ENTRYPOINT.sh /
+WORKDIR /scenarios/
 #RUN git clone https://github.com/mininet/mininet
 # RUN cd mininet && git tag && git checkout -b mininet-2.3.0 2.3.0 && cd .. 
 # RUN cd mininet && export PYTHONPATH=$PYTHONPATH:mininet:

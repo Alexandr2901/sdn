@@ -10,7 +10,7 @@ import os
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
-    for i in range(1):
+    for i in range(3):
         cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
     fileName = 'links.pcap'
@@ -61,14 +61,14 @@ def emptyNet():
     net.addLink(S5,S6)
     net.addLink(S5,S8)
 
-    net.addLink(S1,S5)
-    net.addLink(S2,S4)
-    net.addLink(S3,S5)
-    net.addLink(S2,S6)
-    net.addLink(S4,S8)
-    net.addLink(S5,S7)
-    net.addLink(S6,S8)
-    net.addLink(S5,S9)
+    # net.addLink(S1,S5)
+    # net.addLink(S2,S4)
+    # net.addLink(S3,S5)
+    # net.addLink(S2,S6)
+    # net.addLink(S4,S8)
+    # net.addLink(S5,S7)
+    # net.addLink(S6,S8)
+    # net.addLink(S5,S9)
     net.start()
     # for h in net.hosts:
     #     h.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
@@ -76,15 +76,15 @@ def emptyNet():
     #     h.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
     # net.pingAll()
     # sleep(60)
-    for i in range(len(net.switches)):
-        net.switches[i].start([net.controllers[i%len(net.controllers)]])
+    # for i in range(len(net.switches)):
+    #     net.switches[i].start([net.controllers[i%len(net.controllers)]])
     # 1 2 3 свитч линки
     # 4 5 6
     # 7 8 9
     # net.ping(net.switches)
     # CLI(net)
 
-    for i in range(100):
+    for i in range(2):
         net.pingAll()
         sleep(1)
     sleep(1)
