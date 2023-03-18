@@ -5,20 +5,21 @@ from mininet.node import RemoteController, Node, OVSSwitch
 from mininet.log import setLogLevel, info
 from mininet.cli import CLI
 from mininet.link import Link
+import random
 import os
 
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
-    for i in range(3):
-        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
-        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
+    for i in range(1):
+        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
+        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
     fileName = 'links.pcap'
     try:
         os.remove(fileName)
     except OSError:
         pass
-    s1_pcap = S1.popen('tcpdump -i any -w '+fileName) # s1-eth1 eth0 any
+    # s1_pcap = S1.popen('tcpdump -i any -w '+fileName) # s1-eth1 eth0 any
  
     # S1 = net.addSwitch('s1')
     S2 = net.addSwitch('s2')
@@ -31,10 +32,15 @@ def emptyNet():
     S9 = net.addSwitch('s9')
     S1.start
 
-    for i in range(9):
+    for i in range(3):
         hn = net.addHost("h" + str(i+1))
         sn = net.getNodeByName("s" + str(i+1))
         net.addLink(hn,sn)
+        hn.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
+        hn.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
+        hn.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
+        # hn.configDefault(defaultRoute=hn.defaultIntf())
+
 
     # H1 = net.addHost('h1')
     # H2 = net.addHost('h2')
@@ -61,14 +67,19 @@ def emptyNet():
     net.addLink(S5,S6)
     net.addLink(S5,S8)
 
-    # net.addLink(S1,S5)
-    # net.addLink(S2,S4)
-    # net.addLink(S3,S5)
-    # net.addLink(S2,S6)
-    # net.addLink(S4,S8)
-    # net.addLink(S5,S7)
-    # net.addLink(S6,S8)
-    # net.addLink(S5,S9)
+    # links = [net.addLink(S1,S5),
+    # net.addLink(S2,S4),
+    # net.addLink(S3,S5),
+    # net.addLink(S2,S6),
+    # net.addLink(S4,S8),
+    # net.addLink(S5,S7),
+    # net.addLink(S6,S8),
+    # net.addLink(S5,S9)]
+    # for i in range(len(net.switches)):
+        # hn.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
+        # hn.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
+        # hn.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
+        # net.switches[i].start([net.controllers[i%len(net.controllers)]])
     net.start()
     # for h in net.hosts:
     #     h.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
@@ -76,19 +87,21 @@ def emptyNet():
     #     h.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
     # net.pingAll()
     # sleep(60)
-    # for i in range(len(net.switches)):
-    #     net.switches[i].start([net.controllers[i%len(net.controllers)]])
+  
     # 1 2 3 свитч линки
     # 4 5 6
     # 7 8 9
     # net.ping(net.switches)
     # CLI(net)
-
-    for i in range(2):
+    # h1 = net.hosts[0]
+    # h2 = net.hosts[8]
+    for i in range(8):
         net.pingAll()
+        # print (h1.cmd('ping -c 1000 -i 0.0001 -q  ' + h2.IP()))
+        # net.delLink(links[i])
         sleep(1)
     sleep(1)
-    s1_pcap.terminate()
+    # s1_pcap.terminate()
     CLI(net)
     net.stop()
 

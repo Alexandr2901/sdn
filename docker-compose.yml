@@ -18,6 +18,10 @@ services:
     deploy:
       # mode: replicated
       replicas: 3
+      # resources:
+        # limits:
+          # cpus: ''
+          # memory: 50M
     # ports:
     #   - 6633:6633
     #   - 8181:8181
@@ -69,17 +73,17 @@ services:
     #   - 6635:6633
     #   - 8183:8181
     #   - 8103:8101
-  mininet:  
-     build:
-       context: .
-       dockerfile: mininet/Dockerfile
-     tty: true
-     networks:
-       sdn:
-        ipv4_address: 172.16.0.222
-     privileged: true
-     volumes:
-       - ./mininet/scenarios:/scenarios:delegated
+  # mininet:  
+  #    build:
+  #      context: .
+  #      dockerfile: mininet/Dockerfile
+  #    tty: true
+  #    networks:
+  #      sdn:
+  #       ipv4_address: 172.16.0.222
+  #    privileged: true
+  #    volumes:
+  #      - ./mininet/scenarios:/scenarios:delegated
   # portainer:
   #    image: portainer/portainer-ce:latest
   #    container_name: portainer

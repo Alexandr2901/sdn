@@ -7,6 +7,7 @@ WORKDIR /opt/odl/karaf-0.8.4/bin
 RUN ./set_persistence.sh off 
 RUN apt-get -y update && apt-get install -y tcpdump dnsutils iputils-ping net-tools
 RUN echo "feature:install odl-restconf odl-l2switch-switch odl-mdsal-apidocs http odl-mdsal-distributed-datastore odl-dluxapps-applications odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-yangui odl-dluxapps-yangvisualizer odl-dluxapps-yangman odl-dluxapps-yangutils && logout" | ./karaf
+# RUN echo "feature:install odl-l2switch-switch odl-mdsal-distributed-datastore && logout" | ./karaf
 RUN rm /opt/odl/odl.zip 
 COPY opendaylight/ENTRYPOINT.sh /
 ENTRYPOINT ["/ENTRYPOINT.sh"]

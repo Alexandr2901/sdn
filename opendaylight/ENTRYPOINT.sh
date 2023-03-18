@@ -26,9 +26,9 @@ for i in "${!arrVar[@]}"; do
 done
 string="${arrVar[*]}"
 echo $index $string
-echo /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
 ./stop
-# ./configure_cluster.sh $index $string
+# echo /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
+./configure_cluster.sh $index $string
 # sed -i 's/cluster {/cluster { \n akka.cluster.downing-provider-class = "akka.cluster.sbr.SplitBrainResolverProvider"/' /opt/odl/karaf-0.8.4/configuration/initial/akka.conf 
 # sed -i 's/cluster {/cluster { \n      downing-provider-class = "akka.cluster.sbr.SplitBrainResolverProvider"/' /opt/odl/karaf-0.8.4/configuration/initial/akka.conf 
 # sed -i 's/cluster {/cluster { \
@@ -47,5 +47,6 @@ echo /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
 # /opt/odl/karaf-0.8.4/bin/stop
 # /opt/odl/karaf-0.8.4/bin/client -r 10 restart org.opendaylight.controller.sal-distributed-datastore
 # /opt/odl/karaf-0.8.4/bin/karaf
-./start
+./karaf
 /bin/bash
+# JAVA_MAX_MEM=4G JAVA_MAX_PERM_MEM=512m ./karaf
