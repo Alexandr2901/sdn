@@ -11,7 +11,9 @@ def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
     for i in range(3):
-        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
+        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
+        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
+
     # c2 = net.addController('c2',controller=RemoteController, ip="172.16.0.3",port=6633)
     # c3 = net.addController('c3',controller=RemoteController, ip="172.16.0.4",port=6633)
     # c4 = net.addController('c4',controller=RemoteController, ip="172.16.0.3",port=6633)
@@ -23,7 +25,7 @@ def emptyNet():
         os.remove(fileName)
     except OSError:
         pass
-    s1_pcap = S1.popen('tcpdump -i any -w '+fileName) # s1-eth1 eth0 any
+    s1_pcap = S1.popen('tcpdump -c 10000 -i any -w '+fileName) # s1-eth1 eth0 any
     # s1_pcap.terminate()
 
     # net.addLink(c1,S1)
@@ -47,13 +49,13 @@ def emptyNet():
     # s1_pcap = S1.popen('tcpdump -w '+fileName+' -i any')
     # for i in range(10):
     #     # sleep(5)
-    net.pingAll("0")
+    net.pingAll()
     #     # sleep(1)
     h1 = net.hosts[0]
     h2 = net.hosts[1]
     # print(h2.IP())
     print("start ping flood")
-    print (h1.cmd('ping -c 10 -i 0.001 -q -s 1000 ' + h2.IP()))
+    print (h1.cmd('ping -c 1000 -i 0.001 -q -s 1000 ' + h2.IP()))
 
     # sleep(1)
     # net.iperf((h1,h2),

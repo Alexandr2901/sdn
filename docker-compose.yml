@@ -6,22 +6,31 @@ services:
   #   - "8080:6633"
   #   networks:
   #     sdn:
-  #       ipv4_address: 172.19.0.6
+  #       ipv4_address: 172.16.0.6
+  # web1:
+  #       image: strm/helloworld-http
+  #       networks:
+  #         sdn:
+  #           ipv4_address: 172.16.0.100
+  # web2:
+  #       image: strm/helloworld-http
+  #       networks:
+  #         sdn:
+  #           ipv4_address: 172.16.0.101   
+  # web3:
+  #       image: strm/helloworld-http
+  #       networks:
+  #         sdn:
+  #           ipv4_address: 172.16.0.102        
   opendaylight_max:  
     build:
       context: .
       dockerfile: opendaylight/Dockerfile
     tty: true
-    # restart: always
     networks:
       sdn:
     deploy:
-      # mode: replicated
       replicas: 3
-      # resources:
-        # limits:
-          # cpus: ''
-          # memory: 50M
     # ports:
     #   - 6633:6633
     #   - 8181:8181
@@ -97,9 +106,9 @@ services:
   #     - 9000:9000
   #    networks:
   #      sdn:
+
 networks:
   sdn:
-    driver: bridge
     ipam:
       config:
        - subnet: 172.16.0.0/16
