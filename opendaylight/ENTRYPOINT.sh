@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 arrVar=()
 for ((i=1; i<=10;i++)); do
-    param=$(dig +short sdn_opendaylight_max_$i.sdn_sdn)
+    # param=$(dig +short sdn_opendaylight_max_$i.sdn_sdn)
+    param=$(dig +short opendaylight_max_$i)
     arrVar+=($param)
 done
 index=1
@@ -12,6 +13,7 @@ done
 string="${arrVar[*]}"
 # echo $index $string
 ./stop
+bash l2.sh
 # echo /opt/odl/karaf-0.8.4/bin/configure_cluster.sh $index $string
 ./configure_cluster.sh $index $string
 # ./configure-cluster-ipdetect.sh $string
@@ -32,7 +34,7 @@ string="${arrVar[*]}"
 
 # /opt/odl/karaf-0.8.4/bin/stop
 # /opt/odl/karaf-0.8.4/bin/client -r 10 restart org.opendaylight.controller.sal-distributed-datastore
-# /opt/odl/karaf-0.8.4/bin/karaf
-JAVA_MAX_MEM=4G JAVA_MAX_PERM_MEM=512m ./karaf
-/bin/bash
+# /opt/odl/karaf-0.8.4/bin/karaf 
+./karaf
 # JAVA_MAX_MEM=4G JAVA_MAX_PERM_MEM=512m ./karaf
+/bin/bash

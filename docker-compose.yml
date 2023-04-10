@@ -1,88 +1,54 @@
-version: '3.9'
+version: '3.5'
 services:
   # nginx:
-  #   build: ./nginx
-  #   ports:
-  #   - "8080:6633"
+    # build: ./nginx
+    # ports:
+    # - "8080:6633"
+    # networks:
+    #   sdn:
+    #     ipv4_address: 172.16.0.6
+  # opendaylight_max:  
+  #   build: opendaylight/
+  #   tty: true
   #   networks:
   #     sdn:
-  #       ipv4_address: 172.16.0.6
-  # web1:
-  #       image: strm/helloworld-http
-  #       networks:
-  #         sdn:
-  #           ipv4_address: 172.16.0.100
-  # web2:
-  #       image: strm/helloworld-http
-  #       networks:
-  #         sdn:
-  #           ipv4_address: 172.16.0.101   
-  # web3:
-  #       image: strm/helloworld-http
-  #       networks:
-  #         sdn:
-  #           ipv4_address: 172.16.0.102        
-  opendaylight_max:  
-    build:
-      context: .
-      dockerfile: opendaylight/Dockerfile
+  #   deploy:
+  #     replicas: 3
+  #   ports:
+  #   - "6633:6633"
+  opendaylight_max_1:  
+    build: opendaylight/
     tty: true
     networks:
       sdn:
-    deploy:
-      replicas: 3
+    ports:
+      - 6633:6633
+      - 6653:6653
+      - 8181:8181
+      - 8101:8101
+  opendaylight_max_2:  
+    build: opendaylight/ 
+    tty: true
+    networks:
+      sdn:
+    ports:
+      - 6634:6633
+      - 6654:6653
+      - 8182:8181
+      - 8102:8101
+  opendaylight_max_3:  
+    build: opendaylight/
+    tty: true
+    networks:
+      sdn:
+    ports:
+      - 6635:6633
+      - 6655:6653
+      - 8183:8181
+      - 8103:8101
     # ports:
-    #   - 6633:6633
-    #   - 8181:8181
-    #   - 8101:8101
-    # expose:
-    #   - 6633
-    #   - 8181
-    #   - 8101
-
-  # opendaylight1:  
-  #   build:
-  #     context: .
-  #     dockerfile: opendaylight/Dockerfile
-  #     args:
-  #       - cluster_number=1
-  #   tty: true
-  #   networks:
-  #     sdn:
-  #       ipv4_address: 172.19.0.2
-  #   ports:
-  #     - 6633:6633
-  #     - 8181:8181
-  #     - 8101:8101
-  # opendaylight2: 
-  #   build:
-  #     context: .
-  #     dockerfile: opendaylight/Dockerfile
-  #     args:
-  #       - cluster_number=2
-  #   tty: true
-  #   networks:
-  #     sdn:
-  #      ipv4_address: 172.19.0.3
-  #   ports:
-  #     - 6634:6633
-  #     - 8182:8181
-  #     - 8102:8101
-  # opendaylight3:
-  #   build:
-  #     context: .
-  #     dockerfile: opendaylight/Dockerfile
-  #     args:
-  #       - cluster_number=3
-  #   tty: true
-  #   networks:
-  #     sdn:
-  #      ipv4_address: 172.19.0.4
-    # ports:
-    #   - 6635:6633
-    #   - 8183:8181
-    #   - 8103:8101
-  # mininet:  
+      # - "8000:8000"
+ # mininet:  
   #    build:
   #      context: .
   #      dockerfile: mininet/Dockerfile
@@ -93,29 +59,19 @@ services:
   #    privileged: true
   #    volumes:
   #      - ./mininet/scenarios:/scenarios:delegated
-  # portainer:
-  #    image: portainer/portainer-ce:latest
-  #    container_name: portainer
-  #    security_opt:
-  #      - no-new-privileges:true
-  #    volumes:
-  #      - /etc/localtime:/etc/localtime:ro
-  #      - /var/run/docker.sock:/var/run/docker.sock:ro
-  # #      - ./portainer-data:/data
-  #    ports:
-  #     - 9000:9000
-  #    networks:
-  #      sdn:
-
 networks:
   sdn:
-    ipam:
-      config:
-       - subnet: 172.16.0.0/16
-# volumes:
-#   postgres:
-#     driver: local
-#   redis:
-#     driver: local
-#   rabbit-data:
-#     driver: local
+    # driver: bridge
+    # ipam:
+    #   driver: default
+    #   config:
+    #   - subnet: 172.16.0.0/24
+    # driver: "overlay"
+    #   - internal: false
+    # ipam:
+    #   config:
+    #    - subnet: 192.168.0.8/29
+# networks:
+#   default:
+#     external:
+#       name: nginx-proxy

@@ -25,4 +25,4 @@ docker-compose up -d --build --remove-orphans
 # scp mininet@192.168.56.106:/home/mininet/projects/sdn/mininet/scenarios/dump.pcap  .
 # tcpdump -i any -nq
 docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"
-# netcat -zv 172.16.0.2 1-9000 2>&1 | grep succeeded    
+# netcat -zv 192.168.0.250 1-9000 2>&1 | grep succeeded    

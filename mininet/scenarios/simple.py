@@ -10,9 +10,11 @@ import os
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
-    for i in range(3):
+    for i in range(1):
+        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0.6",port=6633)
+        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="localhost",port=6633)
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
-        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
+        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
 
     # c2 = net.addController('c2',controller=RemoteController, ip="172.16.0.3",port=6633)
     # c3 = net.addController('c3',controller=RemoteController, ip="172.16.0.4",port=6633)
@@ -55,7 +57,7 @@ def emptyNet():
     h2 = net.hosts[1]
     # print(h2.IP())
     print("start ping flood")
-    print (h1.cmd('ping -c 1000 -i 0.001 -q -s 1000 ' + h2.IP()))
+    print (h1.cmd('ping -c 10 -i 0.001 -q -s 1000 ' + h2.IP()))
 
     # sleep(1)
     # net.iperf((h1,h2),
