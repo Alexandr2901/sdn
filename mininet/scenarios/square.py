@@ -11,17 +11,19 @@ import os
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
-    for i in range(1):
+    for i in range(3):
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0.6",port=6633)
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
         cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
+        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="192.168.31.250",port=(6633+i))
+
         cn.master
     fileName = 'square.pcap'
     try:
         os.remove(fileName)
     except OSError:
         pass    
-    s1_pcap = S1.popen('tcpdump -c 10000 -i any -w '+fileName) # s1-eth1 eth0 any
+    s1_pcap = S1.popen('tcpdump -c 20000 -i any -w '+fileName) # s1-eth1 eth0 any
  
     # S1 = net.addSwitch('s1')
     S2 = net.addSwitch('s2')
@@ -70,7 +72,7 @@ def emptyNet():
     net.addLink(S5,S7),
     net.addLink(S6,S8),
     net.addLink(S5,S9)]
-    for i in range(3):
+    for i in range(9):
         hn = net.addHost("h" + str(i+1))
         sn = net.getNodeByName("s" + str((i)%len(net.switches)+1))
         net.addLink(hn,sn)
@@ -80,9 +82,12 @@ def emptyNet():
     #     net.controllers[i].start()
     for i in range(len(net.switches)):
         # net.switches[i].start([net.controllers[i% len(net.controllers)] ])
-        net.switches[i].start([net.controllers[0] ])
+        net.switches[i].start([net.controllers[0]])
 
     net.start()
+    # print('sleep 15')
+    # sleep(15)
+    # print('wake up')
 
     # switches = net.switches
     # for i in range(len(net.switches)):
@@ -110,15 +115,15 @@ def emptyNet():
     h2 = net.hosts[1]
     # CLI(net)
 
-    for i in range(100):
+    for i in range(1):
         net.pingAll()
         # net.ping([h1,h2])
-        net.iperf((h1,h2),
-              l4Type='UDP',
-              seconds=3,
-              udpBw='1000M'
-              )
-        CLI(net)
+        # net.iperf((h1,h2),
+        #       l4Type='UDP',
+        #       seconds=2,
+        #       udpBw='1000M'
+        #       )
+        # CLI(net)
         # Sn = net.addSwitch("s" + str(len(net.switches)+1))
 
         # for j in range(5):

@@ -7,45 +7,45 @@ services:
     # networks:
     #   sdn:
     #     ipv4_address: 172.16.0.6
-  # opendaylight_max:  
+  opendaylight_max:  
+    build: opendaylight/
+    tty: true
+    networks:
+      sdn:
+    deploy:
+      replicas: 3
+  #   ports:
+  #   - "6633:6633"
+  # opendaylight_max_1:  
   #   build: opendaylight/
   #   tty: true
   #   networks:
   #     sdn:
-  #   deploy:
-  #     replicas: 3
   #   ports:
-  #   - "6633:6633"
-  opendaylight_max_1:  
-    build: opendaylight/
-    tty: true
-    networks:
-      sdn:
-    ports:
-      - 6633:6633
-      - 6653:6653
-      - 8181:8181
-      - 8101:8101
-  opendaylight_max_2:  
-    build: opendaylight/ 
-    tty: true
-    networks:
-      sdn:
-    ports:
-      - 6634:6633
-      - 6654:6653
-      - 8182:8181
-      - 8102:8101
-  opendaylight_max_3:  
-    build: opendaylight/
-    tty: true
-    networks:
-      sdn:
-    ports:
-      - 6635:6633
-      - 6655:6653
-      - 8183:8181
-      - 8103:8101
+  #     - 6633:6633
+  #     - 6653:6653
+  #     - 8181:8181
+  #     - 8101:8101
+  # opendaylight_max_2:  
+  #   build: opendaylight/ 
+  #   tty: true
+  #   networks:
+  #     sdn:
+  #   ports:
+  #     - 6634:6633
+  #     - 6654:6653
+  #     - 8182:8181
+  #     - 8102:8101
+  # opendaylight_max_3:  
+  #   build: opendaylight/
+  #   tty: true
+  #   networks:
+  #     sdn:
+  #   ports:
+  #     - 6635:6633
+  #     - 6655:6653
+  #     - 8183:8181
+  #     - 8103:8101
     # ports:
       # - "8000:8000"
  # mininet:  
@@ -62,10 +62,10 @@ services:
 networks:
   sdn:
     # driver: bridge
-    # ipam:
-    #   driver: default
-    #   config:
-    #   - subnet: 172.16.0.0/24
+    ipam:
+      # driver: default
+      config:
+      - subnet: 172.16.0.0/24
     # driver: "overlay"
     #   - internal: false
     # ipam:

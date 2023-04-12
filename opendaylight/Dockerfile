@@ -27,7 +27,7 @@ RUN rm /opt/odl/odl.zip
 # RUN rm /opt/odl/karaf-0.8.4/system/org/opendaylight/openflowplugin/openflowplugin/0.6.4/openflowplugin-0.6.4.jar
 # COPY ./openflowplugin-0.6.4.jar /opt/odl/karaf-0.8.4/system/org/opendaylight/openflowplugin/openflowplugin/0.6.4/openflowplugin-0.6.4.jar
 # COPY ./openflowplugin-api-0.6.4.jar /opt/odl/karaf-0.8.4/system/org/opendaylight/openflowplugin/openflowplugin-api/0.6.4/openflowplugin-api-0.6.4.jar 
-RUN ./start && ./client -r 10 "feature:install odl-l2switch-all features-dluxapps features-restconf odl-mdsal-clustering odl-netconf-clustered-topology  odl-mdsal-distributed-datastore" && ./stop
+RUN ./start && ./client -r 10 "feature:install odl-l2switch-all features-dluxapps features-restconf odl-mdsal-clustering odl-netconf-clustered-topology odl-mdsal-distributed-datastore odl-jolokia" && ./stop
 # RUN ./start && ./client -r 10 "feature:install odl-l2switch-all " && ./stop
 # odl-mdsal-clustering odl-netconf-clustered-topology odl-openflowplugin-flow-services  odl-jolokia
 # RUN ./set_persistence.sh off 
