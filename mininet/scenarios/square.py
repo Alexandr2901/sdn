@@ -11,12 +11,11 @@ import os
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
-    for i in range(3):
+    for i in range(5):
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0.6",port=6633)
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
         cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="192.168.31.250",port=(6633+i))
-
         cn.master
     fileName = 'square.pcap'
     try:
@@ -24,7 +23,6 @@ def emptyNet():
     except OSError:
         pass    
     s1_pcap = S1.popen('tcpdump -c 20000 -i any -w '+fileName) # s1-eth1 eth0 any
- 
     # S1 = net.addSwitch('s1')
     S2 = net.addSwitch('s2')
     S3 = net.addSwitch('s3')
@@ -77,46 +75,41 @@ def emptyNet():
         sn = net.getNodeByName("s" + str((i)%len(net.switches)+1))
         net.addLink(hn,sn)
     # net.build()
-
     # for i in range(len(net.controllers)):
     #     net.controllers[i].start()
-    for i in range(len(net.switches)):
-        # net.switches[i].start([net.controllers[i% len(net.controllers)] ])
-        net.switches[i].start([net.controllers[0]])
-
-    net.start()
+    # for i in range(len(net.switches)):
+    #     net.switches[i].start([net.controllers[i% len(net.controllers)] ])
+    #     # net.switches[i].start([net.controllers[0]])
     # print('sleep 15')
     # sleep(15)
     # print('wake up')
 
     # switches = net.switches
-    # for i in range(len(net.switches)):
-    #         # net.switches[i].start([net.controllers[i % len(net.controllers)]])
+    for i in range(len(net.switches)):
+            net.switches[i].start([net.controllers[i % len(net.controllers)]])
     #         net.switches[i].start([net.controllers[0]])
 
             # print(sname)
             # print(net.controllers[i % len(net.controllers)])
-    
-    # net.start()
-
+    net.start()
     # for h in net.hosts:
     #     h.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
     #     h.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
     #     h.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
-    # net.pingAll()
     # sleep(60)
-  
+    net.pingAll()
     # 1 2 3 свитч линки
     # 4 5 6
     # 7 8 9
     # net.ping(net.switches)
     # CLI(net)
     h1 = net.hosts[0]
-    h2 = net.hosts[1]
+    h2 = net.hosts[8]
     # CLI(net)
-
-    for i in range(1):
-        net.pingAll()
+    for i in range(10):
+        # CLI(net)
+        # net.pingAll()
+        print (h1.cmd('ping -c 100000 -i 0.0000000001 -q  ' + h2.IP()))
         # net.ping([h1,h2])
         # net.iperf((h1,h2),
         #       l4Type='UDP',
@@ -173,8 +166,8 @@ def emptyNet():
             # hlink = net.addLink(sn,hn)
             # sn.attach(hlink.intf1)
             # hn.configDefault(defaultRoute=hn.defaultIntf())
-        sleep(5)
-        # CLI(net)
+        # sleep(5)
+    net.pingAll()
     sleep(1)
     s1_pcap.terminate()
     CLI(net)
