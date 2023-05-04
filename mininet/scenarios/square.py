@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from time import sleep
+from time import sleep, time
 from mininet.net import Mininet
 from mininet.node import RemoteController, Node, OVSSwitch
 from mininet.log import setLogLevel, info
@@ -11,19 +11,17 @@ import os
 def emptyNet():
     net = Mininet(controller=RemoteController, waitConnected=True)
     S1 = net.addSwitch('s1')
-    for i in range(5):
+    for i in range(1):  
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0.6",port=6633)
         # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="sdn_opendaylight_max_"+str(i+1)+".sdn_sdn",port=6633)
-        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
-        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="192.168.31.250",port=(6633+i))
-        cn.master
+        # cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="172.16.0."+str(i+2),port=6633)
+        cn = net.addController('c'+ str(i+1),controller=RemoteController, ip="192.168.31.250",port=(6633+i))
     fileName = 'square.pcap'
     try:
         os.remove(fileName)
     except OSError:
         pass    
     s1_pcap = S1.popen('tcpdump -c 20000 -i any -w '+fileName) # s1-eth1 eth0 any
-    # S1 = net.addSwitch('s1')
     S2 = net.addSwitch('s2')
     S3 = net.addSwitch('s3')
     S4 = net.addSwitch('s4')
@@ -85,9 +83,12 @@ def emptyNet():
     # print('wake up')
 
     # switches = net.switches
-    for i in range(len(net.switches)):
-            net.switches[i].start([net.controllers[i % len(net.controllers)]])
-    #         net.switches[i].start([net.controllers[0]])
+    # controllers =[net.controllers[0],net.controllers[1],net.controllers[2]]
+    # for i in range(len(net.switches)):
+    # #         # net.switches[i].start([net.controllers[i % len(net.controllers)]])
+    #         # net.switches[i].start([net.controllers[0]])
+    #         net.switches[i].start(controllers)
+
 
             # print(sname)
             # print(net.controllers[i % len(net.controllers)])
@@ -97,7 +98,7 @@ def emptyNet():
     #     h.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
     #     h.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
     # sleep(60)
-    net.pingAll()
+    # net.pingAll()
     # 1 2 3 свитч линки
     # 4 5 6
     # 7 8 9
@@ -106,10 +107,12 @@ def emptyNet():
     h1 = net.hosts[0]
     h2 = net.hosts[8]
     # CLI(net)
-    for i in range(10):
+    start = time()
+    for i in range(5):
+        net.pingAll()
+        # sleep(1)
         # CLI(net)
-        # net.pingAll()
-        print (h1.cmd('ping -c 100000 -i 0.0000000001 -q  ' + h2.IP()))
+        print (h1.cmd('ping -c 100 -f ' + h2.IP()))
         # net.ping([h1,h2])
         # net.iperf((h1,h2),
         #       l4Type='UDP',
@@ -167,8 +170,11 @@ def emptyNet():
             # sn.attach(hlink.intf1)
             # hn.configDefault(defaultRoute=hn.defaultIntf())
         # sleep(5)
+
+    print('time Time TIME')
+    print(time() - start)
     net.pingAll()
-    sleep(1)
+    # sleep(1)
     s1_pcap.terminate()
     CLI(net)
     net.stop()
