@@ -7,16 +7,33 @@ services:
     # networks:
     #   sdn:
     #     ipv4_address: 172.16.0.6
-  opendaylight_max:  
-    build: opendaylight/
-    tty: true
+  # opendaylight_max:  
+  #   build: opendaylight/
+  #   tty: true
+  #   networks:
+  #     sdn:
+  #   deploy:
+  #     replicas: 3
+      # resources:
+      #   limits:
+      #     cpus: '3'
+  cbench:
+    build: projects/
     networks:
       sdn:
-    deploy:
-      replicas: 5
-      resources:
-        limits:
-          cpus: '1'
+    tty: true
+    privileged: true
+  # mininet:  
+  #    build:
+  #      context: .
+  #      dockerfile: mininet/Dockerfile
+  #    tty: true
+  #    networks:
+  #      sdn:
+  #       ipv4_address: 172.16.0.222
+  #    privileged: true
+  #    volumes:
+      #  - ./mininet/scenarios:/scenarios:delegated
   #   ports:
   #   - "6633:6633"
   # opendaylight_max_1:  
@@ -51,17 +68,7 @@ services:
   #     - 8103:8101
     # ports:
       # - "8000:8000"
- # mininet:  
-  #    build:
-  #      context: .
-  #      dockerfile: mininet/Dockerfile
-  #    tty: true
-  #    networks:
-  #      sdn:
-  #       ipv4_address: 172.16.0.222
-  #    privileged: true
-  #    volumes:
-  #      - ./mininet/scenarios:/scenarios:delegated
+
 networks:
   sdn:
     # driver: bridge
